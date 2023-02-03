@@ -1,12 +1,20 @@
 const express = require('express')
-const port = 3000
 const app = express()
+const port = 3000   
 
-const tarefa = require('./controllers/tarefa-controller')
-const usuario = require('./controllers/usuario-controller')
-tarefa(app)
-usuario(app)
+
+app.use(express.json())
+
+
+const { usuarioGet, usuarioPost } = require('./controllers/usuario-controller')
+usuarioGet(app)
+usuarioPost(app)
+
+const { tarefaGet, tarefaPost } = require('./controllers/tarefa-controller')
+tarefaGet(app)
+tarefaPost(app)
+
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+    console.log(`Servidor rodando na porta:${port}`)
 })

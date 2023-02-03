@@ -1,9 +1,14 @@
-
-function usuario(app){
-app.get('/usuario', (req, res) => {
-    res.send('Rota Ativada com GET e recurso usuariosvalores de nome, email e senha  devem ser retornados')
-  })
+function usuarioGet(app) {
+    app.get('/usuario', (req, res) => {
+        res.send("Rota do usuário ativada: ")
+    })
 }
 
-module.exports = usuario
-  
+function usuarioPost(app) {
+    app.post('/usuario', (req, res) => {
+        res.send('Usuário cadastrado')
+    })
+}
+
+
+module.exports = { usuarioGet, usuarioPost }
