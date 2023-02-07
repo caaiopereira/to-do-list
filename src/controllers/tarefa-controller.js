@@ -1,13 +1,21 @@
-function tarefaGet(app) {
-    app.get('/tarefa', (req, res) => {        
-        res.send('O que tem para Hoje: ')
-    })
+class TarefaController {
+
+    static rotas(app){
+        app.get('/tarefa', TarefaController.listar)
+        app.post('/tarefa', TarefaController.inserir)
+    }
+
+
+    //GET
+    static listar(req, res){
+        res.send("Rota GET da tarefa ativada: ")
+    }
+
+
+    //POST
+    static inserir(req, res){
+        res.send("Rota POST da tarefa ativada: ")
+    }
 }
 
-function tarefaPost(app) {
-    app.post('/tarefa', (req, res) => {        
-        res.send('Tarefa adicionada com sucesso')
-    })
-}
-
-module.exports = { tarefaGet, tarefaPost }
+module.exports = TarefaController

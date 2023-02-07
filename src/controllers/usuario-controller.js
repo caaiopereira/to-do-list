@@ -1,14 +1,21 @@
-function usuarioGet(app) {
-    app.get('/usuario', (req, res) => {
-        res.send("Rota do usuário ativada: ")
-    })
+class UsuarioController {
+
+    static rotas(app){
+        app.get('/usuario', UsuarioController.listar)
+        app.post('/usuario', UsuarioController.inserir)
+    }
+
+
+    //GET
+    static listar(req, res){
+        res.send("Rota GET do usuario ativada: ")
+    }
+
+
+    //POST
+    static inserir(req, res){
+        res.send("Rota POST do usuario ativada: ")
+    }
 }
 
-function usuarioPost(app) {
-    app.post('/usuario', (req, res) => {
-        res.send('Usuário cadastrado')
-    })
-}
-
-
-module.exports = { usuarioGet, usuarioPost }
+module.exports = UsuarioController
