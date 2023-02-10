@@ -1,21 +1,26 @@
-class TarefaController {
+// Tarefas não está completa. Falta implementar as funcionalidades
 
+// Importa o bd.js para poder usar o banco de dados simulado
+const { bdTarefas } = require("../infra/bd.js")
+
+class tarefaController {
     static rotas(app){
-        app.get('/tarefa', TarefaController.listar)
-        app.post('/tarefa', TarefaController.inserir)
+        // Rota para o recurso tarefa
+        app.get('/tarefa', tarefaController.listar)
+        app.post('/tarefa', tarefaController.inserir)
     }
 
-
-    //GET
     static listar(req, res){
-        res.send("Rota GET da tarefa ativada: ")
+        const tarefas = bdTarefas
+        // Devolve a lista de tarefas
+        res.send(tarefas)
     }
 
-
-    //POST
     static inserir(req, res){
-        res.send("Rota POST da tarefa ativada: ")
+        res.send('Rota ativada com POST e recurso tarefa: tarefa deve ser inserida')
+        // Console log do corpo da requisição
+        console.log(req.body)
     }
 }
 
-module.exports = TarefaController
+module.exports = tarefaController

@@ -3,7 +3,7 @@ class Tarefa{
         this.titulo = titulo
         this.descricao = descricao
         this.status = status
-        this.data = new Date()
+        this.data = data
     }
 }
 

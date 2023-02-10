@@ -1,21 +1,77 @@
-class UsuarioController {
+// Importa o bd.js para poder usar o banco de dados simulado
+const { bdUsuarios } = require("../infra/bd.js")
 
+const Usuario = require('../models/Usuario.js')
+
+class usuarioController {
     static rotas(app){
-        app.get('/usuario', UsuarioController.listar)
-        app.post('/usuario', UsuarioController.inserir)
+        // Rota para o recurso usuario
+        app.get('/usuario', usuarioController.listar)
+        app.get('/usuario/email/:email', usuarioController.buscarPorEmail)
+        app.post('/usuario', usuarioController.inserir)
+        app.put('/usuario/email/:email', usuarioController.atualizarUsuario)
+        app.delete('/usuario/email/:email', usuarioController.deletarUsuario)
     }
+    
 
-
-    //GET
     static listar(req, res){
-        res.send("Rota GET do usuario ativada: ")
+        const usuarios = bdUsuarios
+        // Devolve a lista de usuarios
+        res.send(usuarios)
     }
 
 
-    //POST
     static inserir(req, res){
-        res.send("Rota POST do usuario ativada: ")
+        const usuario = new Usuario(req.body.nome, req.body.email, req.body.senha)
+        bdUsuarios.push(usuario)
+        res.send(bdUsuarios)
+        // Console log do corpo da requisição
+        console.log(req.body)        
+    }
+
+
+    static buscarPorEmail(req, res){
+        // Busca o email na lista de usuarios
+        const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
+        console.log(usuario)
+        // Se o usuario não for encontrado, devolve um erro
+        if(!usuario){
+            res.status(404).send('Usuário não encontrado')
+        }
+        // Se o usuario for encontrado, devolve o usuario
+        res.send(usuario)
+    }
+
+
+    static deletarUsuario(req, res){
+        // Busca o email na lista de usuarios
+        const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
+        // Se o usuario não for encontrado, devolve um erro
+        if(!usuario){
+            res.status(404).send('Usuário não encontrado')
+        }
+        // Se o usuario for encontrado, deleta o usuario
+        const index = bdUsuarios.indexOf(usuario)
+        bdUsuarios.splice(index, 1)
+        // Devolve o usuario deletado
+        res.status(200).send({"Mensagem: ": `O usuário do email ${usuario.email} foi deletado`} )
+    }
+
+    static atualizarUsuario(req, res){
+        // Busca o email na lista de usuarios
+        const usuario = bdUsuarios.find(usuario => usuario.email === req.params.email)
+        // Se o usuario não for encontrado, devolve um erro
+        if(!usuario){
+            res.send('Usuário não encontrado')
+            return 
+        }
+
+        usuario.nome = req.body.nome
+        usuario.email = req.body.email
+        usuario.senha = req.body.senha
+
+        res.send(bdUsuarios)
     }
 }
 
-module.exports = UsuarioController
+module.exports = usuarioController

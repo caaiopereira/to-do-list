@@ -4,7 +4,6 @@ class Usuario{
         this.email = email
         this.senha = senha
     }
-
 }
 
 module.exports = Usuario
