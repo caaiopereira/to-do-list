@@ -1,4 +1,5 @@
 // Importa o bd.js para poder usar o banco de dados simulado
+const UsuarioDAO = require("../DAO/UsuarioDAO.js")
 const { bdUsuarios } = require("../infra/bd.js")
 
 const Usuario = require('../models/Usuario.js')
@@ -15,7 +16,9 @@ class usuarioController {
     
 
     static listar(req, res){
-        const usuarios = bdUsuarios
+        //chama a classe usuarioDAO com o metodo listar. q agpra é responsavel pelo acesso
+        const usuarios = UsuarioDAO.listar()
+
         // Devolve a lista de usuarios
         res.send(usuarios)
     }
